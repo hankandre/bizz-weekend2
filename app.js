@@ -1,7 +1,17 @@
 var express = require("express");
 var path = require("path");
-var port = 3000;
 var app = express();
+var port = 5000;
+
+console.log("im a server");
+
+app.get("/getsomeinfo", function cbForGetSomeInfo(request, response) {
+  response.sendFile(path.join(__dirname, "assets/pexels-photo-399636.jpeg"));
+});
+
+app.get("/*", function catchall(request, response) {
+  response.sendFile(path.join(__dirname, "views/index.html"));
+});
 
 app.use(express.static("public"));
 
@@ -16,11 +26,11 @@ app.use(express.static("public"));
 //   response.sendFile(path.join(__dirname, "client/index.html"));
 // });
 
-app.listen(port, function() {
-  console.log("server working", port);
-});
+app.listen(5000);
 
-app.get("/", function(req, res) {
-  res.sendFile(path.resolve("./public/index.html"));
-  console.log("base url");
-});
+console.log("running on port 3000");
+
+// app.get("/", function(req, res) {
+//   res.sendFile(path.resolve("./public/index.html"));
+//   console.log("base url");
+// });

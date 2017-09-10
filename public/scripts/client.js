@@ -1,39 +1,37 @@
-console.log("client-side source");
+var $ = jQuery;
 
-function readyNow() {
-  $("#addPerson").on("click", addPerson);
-  getPersonList();
-}
-
-function addPerson() {
-  var nametoAdd = $("#name").val();
-  var factToAdd = $("#fact").val();
-  console.log(nametoAdd, factToAdd);
-
-  var person = {
-    name: nametoAdd,
-    fact: factToAdd
-  };
-
-  $(".person").val("");
-
+$(document).ready(function onReady() {
+  console.log("Document Ready");
   $.ajax({
-    type: "POST",
-    url: "/personlist",
-    data: person,
-    success: function(response) {
-      console.log(response);
-      getPersonList();
+    method: "GET",
+    url: "/getsomeinfo",
+    success: function(data) {
+      $("body").append(`<img src="${data}" />`);
     }
   });
-}
+});
 
-// $.ajax({
-//   method: "GET",
-//   url: "/",
-//   success: function(response) {
-//     console.log("page load");
-//   }
-// });
+// function addPerson() {
+//   var nametoAdd = $("#name").val();
+//   var factToAdd = $("#fact").val();
+//   console.log(nametoAdd, factToAdd);
+
+//   var person = {
+//     name: nametoAdd,
+//     fact: factToAdd
+//   };
+
+//   $(".person").val("");
+
+//   $.ajax({
+//     type: "POST",
+//     url: "/personlist",
+//     data: person,
+//     success: function(response) {
+//       console.log(response);
+//       getPersonList();
+//     }
+//   });
+// }
 
 $(document).ready(readyNow);
