@@ -1,7 +1,7 @@
 var express = require("express");
 var path = require("path");
 var app = express();
-var port = 5000;
+var port = 3000;
 
 console.log("im a server");
 
@@ -10,10 +10,8 @@ app.get("/getsomeinfo", function cbForGetSomeInfo(request, response) {
 });
 
 app.get("/*", function catchall(request, response) {
-  response.sendFile(path.join(__dirname, "views/index.html"));
+  response.sendFile(path.join(__dirname, "./public/views/index.html"));
 });
-
-app.use(express.static("public"));
 
 // app.get("/", function cb(res, req) {
 //   res.sendFile(path.resolve("client/index.html"));
@@ -26,9 +24,9 @@ app.use(express.static("public"));
 //   response.sendFile(path.join(__dirname, "client/index.html"));
 // });
 
-app.listen(5000);
+app.listen(port);
 
-console.log("running on port 3000");
+console.log("listening on port" + port);
 
 // app.get("/", function(req, res) {
 //   res.sendFile(path.resolve("./public/index.html"));
