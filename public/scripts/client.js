@@ -1,37 +1,49 @@
 var $ = jQuery;
 
-$(document).ready(function onReady() {
-  console.log("Document Ready");
+$(document).ready(onReady);
+
+function onReady() {
+  console.log('Document Ready');
+  getPeople();
+  $('button').click(addPerson);
+}
+
+function getPeople() {
   $.ajax({
-    method: "GET",
-    url: "/getsomeinfo",
-    success: function(data) {
-      $("body").append(`<img src="${data}" />`);
+    method: 'GET',
+    url: '/person',
+    success: function(database) {
+      $('#people').empty();
+      var people = database.people;
+      for (var index = 0; index < people.length; index++) {
+        var person = people[index];
+        $('#people').append(
+          '<div>' +
+            '<h4>Name: ' +
+            person.name +
+            '</h4>' +
+            '<p>Fact: ' +
+            person.fact +
+            '</p>' +
+            '</div>'
+        );
+      }
     }
   });
-});
+}
 
-// function addPerson() {
-//   var nametoAdd = $("#name").val();
-//   var factToAdd = $("#fact").val();
-//   console.log(nametoAdd, factToAdd);
+function addPerson() {
+  var person = {
+    name: $('#name').val(),
+    fact: $('#fact').val()
+  };
 
-//   var person = {
-//     name: nametoAdd,
-//     fact: factToAdd
-//   };
-
-//   $(".person").val("");
-
-//   $.ajax({
-//     type: "POST",
-//     url: "/personlist",
-//     data: person,
-//     success: function(response) {
-//       console.log(response);
-//       getPersonList();
-//     }
-//   });
-// }
-
-$(document).ready(readyNow);
+  $.ajax({
+    method: 'POST',
+    url: '/person',
+    data: person,
+    success: function(data) {
+      getPeople();
+    }
+  });
+}
